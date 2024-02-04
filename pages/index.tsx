@@ -124,7 +124,7 @@ export default function Home({
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.5, delay: 0.4 }}
-                          src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+                          src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                           className="w-[300px] rounded"
                         />
                       </div>
