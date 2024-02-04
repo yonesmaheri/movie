@@ -1,5 +1,5 @@
 import apiCall from "@/app/api/apiCall";
-import { PopularMoviesType } from "@/app/types/popular";
+import { MoviesType } from "@/app/types/popular";
 import {
   Navigation,
   Pagination,
@@ -17,8 +17,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
 import SearchIcon from "@/app/icons/SearchIcon";
 import {
   Button,
@@ -29,11 +27,14 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function Home({
   PopularData,
+  TopRatedData,
 }: {
-  PopularData: PopularMoviesType[];
+  PopularData: MoviesType[];
+  TopRatedData: MoviesType[];
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -41,8 +42,13 @@ export default function Home({
     <>
       <Head>
         <title>Movie Website</title>
+        <link
+          id="favicon"
+          rel="shortcut icon"
+          href="https://files.readme.io/6dc6435-small-favicon.png"
+          type="image/png"
+        ></link>
       </Head>
-
       <section className="w-full h-[100dvh] bg-white flex items-center justify-center relative">
         <header className="absolute top-4 left-10 right-10 h-12 z-10 flex items-center justify-between">
           <div>
@@ -116,10 +122,32 @@ export default function Home({
                         >
                           {data.overview.substring(0, 150)}...
                         </motion.p>
-                        <Button color="primary">Watch Movie</Button>
+                        <Button
+                          as={motion.button}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1, delay: 0.4 }}
+                          color="primary"
+                        >
+                          Watch Movie
+                        </Button>
                       </div>
 
-                      <div className="rounded">
+                      <div className="relative">
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1, delay: 0.4 }}
+                          className="p-1 w-28 absolute left-[-30px] top-[-20px] z-20 rounded flex items-center justify-between"
+                        >
+                          <img
+                            className="rounded"
+                            src="https://mobomovies.online/img/imdb.png"
+                          />
+                          <div className="bg-[rgba(0,0,0,.8)] rounded px-2">
+                            {data.vote_average.toFixed(1)} / 10
+                          </div>
+                        </motion.div>
                         <motion.img
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
@@ -136,7 +164,40 @@ export default function Home({
           ))}
         </Swiper>
       </section>
-      
+
+      <section className="bg-gray-950 h-[100dvh] py-4 flex-col items-center justify-center">
+        <div className="flex items-center justify-center mb-7">
+          <img
+            className="rounded mr-2"
+            src="https://mobomovies.online/img/imdb.png"
+          />
+          <h2 className="text-center text-3xl">Top Rated: </h2>
+        </div>
+        <Swiper
+          modules={[Autoplay, Navigation]}
+          className="h-fit w-[94%] mx-auto"
+          slidesPerView={6}
+          navigation={{ enabled: true }}
+          loop={true}
+          speed={500}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+        >
+          {TopRatedData.map((data) => (
+            <SwiperSlide className="mb-4" key={data.id}>
+              {() => (
+                <div className="flex flex-col items-center">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+                    className="w-40 rounded"
+                  />
+                  <div className="text-center text-sm">{data.title}</div>
+                </div>
+              )}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -179,12 +240,15 @@ export default function Home({
     </>
   );
 }
+
 export const getServerSideProps = async () => {
   const { data: PopularData } = await apiCall.get("/movie/popular");
+  const { data: TopRatedData } = await apiCall.get("/movie/top_rated");
 
   return {
     props: {
       PopularData: PopularData.results,
+      TopRatedData: TopRatedData.results,
     },
   };
 };
