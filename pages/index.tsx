@@ -136,7 +136,6 @@ export default function Home({
           ))}
         </Swiper>
       </section>
-      <div className="bg-red-500">salam</div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
