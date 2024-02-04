@@ -1,4 +1,4 @@
-export type PopularMoviesType = {
+export type MoviesType = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
