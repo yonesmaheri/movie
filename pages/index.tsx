@@ -28,13 +28,16 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import Link from "next/link";
+import GithubIcon from "@/app/icons/GithubIcon";
 
 export default function Home({
   PopularData,
   TopRatedData,
+  NowPlayingData,
 }: {
   PopularData: MoviesType[];
   TopRatedData: MoviesType[];
+  NowPlayingData: MoviesType[];
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -164,38 +167,95 @@ export default function Home({
         </Swiper>
       </section>
 
-      <section className="bg-gray-950 h-[100dvh] py-4 flex-col items-center justify-center">
-        <div className="flex items-center justify-center mb-7">
-          <img
-            className="rounded mr-2"
-            src="https://mobomovies.online/img/imdb.png"
-          />
-          <h2 className="text-center text-3xl">Top Rated: </h2>
+      <section className="bg-gray-950 h-fit py-4 flex-col items-center justify-center">
+        <div className="w-[90%] mx-auto">
+          <div className="flex items-center justify-center mb-7">
+            <img
+              className="rounded mr-2"
+              src="https://mobomovies.online/img/imdb.png"
+            />
+            <h2 className="text-center text-3xl">Top Rated: </h2>
+          </div>
+          <Swiper
+            modules={[Autoplay]}
+            className="h-fit"
+            slidesPerView={6}
+            loop={true}
+            speed={500}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+          >
+            {TopRatedData.map((data) => (
+              <SwiperSlide className="mb-4" key={data.id}>
+                {() => (
+                  <div className="flex group flex-col items-center w-48">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+                      className="w-full h-full rounded group-hover:transform-gpu group-hover:scale-125 transition-all "
+                    />
+                    <div className="text-center text-sm">{data.title}</div>
+                  </div>
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Button as={Link} href="/" color="primary">
+            Explore All
+          </Button>
         </div>
-        <Swiper
-          modules={[Autoplay, Navigation]}
-          className="h-fit w-[94%] mx-auto"
-          slidesPerView={6}
-          navigation={{ enabled: true }}
-          loop={true}
-          speed={500}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-        >
-          {TopRatedData.map((data) => (
-            <SwiperSlide className="mb-4" key={data.id}>
-              {() => (
-                <div className="flex flex-col items-center">
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
-                    className="w-40 rounded"
-                  />
-                  <div className="text-center text-sm">{data.title}</div>
-                </div>
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
       </section>
+
+      <section className="bg-gray-950 h-fit py-4 flex-col items-center justify-center">
+        <div className="w-[90%] mx-auto">
+          <div className="flex items-center justify-center mb-7">
+            <h2 className="text-center text-3xl">Weekly Trends: </h2>
+          </div>
+          <Swiper
+            modules={[Autoplay]}
+            className="h-fit"
+            slidesPerView={6}
+            loop={true}
+            speed={500}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+          >
+            {NowPlayingData.map((data) => (
+              <SwiperSlide className="mb-4" key={data.id}>
+                {() => (
+                  <div className="flex group flex-col items-center w-48">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+                      className="w-full h-full rounded group-hover:transform-gpu group-hover:scale-125 transition-all "
+                    />
+                    <div className="text-center text-sm">{data.name}</div>
+                  </div>
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Button as={Link} href="/" color="primary">
+            Explore All
+          </Button>
+        </div>
+      </section>
+
+      <footer className="bg-gray-950 h-fit py-4 flex-col items-center justify-center">
+        <div className="w-[90%] mx-auto rounded bg-gray-800 py-2 px-4">
+          <div className="text-center">
+            Developed by NextJs <br />
+            Developer :{" "}
+            <Link
+              className="text-blue-500"
+              href={"mailto:yonesmaheri80@gmail.com"}
+            >
+              Yones Maheri
+            </Link>
+          </div>
+          <nav className="text-center flex items-center justify-center">
+            <Link href={"https://github.com/yonesmaheri"}>
+              <GithubIcon />
+            </Link>
+          </nav>
+        </div>
+      </footer>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -243,11 +303,13 @@ export default function Home({
 export const getServerSideProps = async () => {
   const { data: PopularData } = await apiCall.get("/movie/popular");
   const { data: TopRatedData } = await apiCall.get("/movie/top_rated");
+  const { data: NowPlayingData } = await apiCall.get("/trending/tv/week");
 
   return {
     props: {
       PopularData: PopularData.results,
       TopRatedData: TopRatedData.results,
+      NowPlayingData: NowPlayingData.results,
     },
   };
 };
