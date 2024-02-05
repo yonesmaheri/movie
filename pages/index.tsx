@@ -96,7 +96,7 @@ export default function Home({
           speed={500}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
         >
-          {PopularData.map((data) => (
+          {PopularData.slice(0, 8).map((data) => (
             <SwiperSlide
               key={data.id}
               style={{
