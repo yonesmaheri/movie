@@ -211,18 +211,18 @@ export default function Home({
           </div>
           <Swiper
             modules={[Autoplay]}
-            className="h-fit"
-            slidesPerView={6}
+            className="h-fit justify-center items-center flex"
+            slidesPerView={3}
             loop={true}
             speed={500}
             autoplay={{ delay: 2000, disableOnInteraction: false }}
           >
-            {NowPlayingData.map((data) => (
+            {NowPlayingData.slice(0, 5).map((data) => (
               <SwiperSlide className="mb-4" key={data.id}>
                 {() => (
-                  <div className="flex group flex-col items-center w-48">
+                  <div className="flex group flex-col items-center w-96">
                     <img
-                      src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+                      src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
                       className="w-full h-full rounded group-hover:transform-gpu group-hover:scale-125 transition-all "
                     />
                     <div className="text-center text-sm">{data.name}</div>
