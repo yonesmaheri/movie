@@ -126,9 +126,8 @@ export default function Home({
                           {data.overview.substring(0, 150)}...
                         </motion.p>
                         <Button
-                          as={motion.button}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
+                          as={Link}
+                          href={`/movie/${data.id}`}
                           color="primary"
                         >
                           Watch Movie
