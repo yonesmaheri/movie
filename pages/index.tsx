@@ -43,11 +43,7 @@ export default function Home({
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { data, isFetching, isSuccess } = useQuery({
-    queryKey: ["PopularData"],
-    queryFn: () => apiCall.get("/movie/popular"),
-  });
-  if (isFetching) {
+  if (!PopularData.length && !TopRatedData.length && !NowPlayingData.length) {
     return <SplashScreen />;
   }
 

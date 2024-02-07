@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react";
+import { Divider, Spinner } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
 export default function SplashScreen() {
@@ -10,7 +10,8 @@ export default function SplashScreen() {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="h-[100dvh] w-full flex items-center justify-center"
       >
-        <Spinner />
+        <Spinner size="lg" />
+        <Divider orientation="vertical" className="mx-3 h-10 bg-blue-500" />
         <h2>
           Welcome to my movie website <br /> please wait...
         </h2>
