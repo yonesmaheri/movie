@@ -48,7 +48,9 @@ export default function Home({
     queryFn: () => apiCall.get("/movie/popular"),
   });
   if (isFetching) {
-    return <SplashScreen />;
+    return setTimeout(() => {
+      return <SplashScreen />;
+    }, 5000);
   }
 
   return (
