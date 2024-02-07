@@ -30,6 +30,8 @@ import {
 import Link from "next/link";
 import GithubIcon from "@/app/icons/GithubIcon";
 import SplashScreen from "@/app/components/splashScreen";
+import Footer from "@/app/components/footer";
+import Header from "@/app/components/header";
 
 export default function Home({
   PopularData,
@@ -40,8 +42,6 @@ export default function Home({
   TopRatedData: MoviesType[];
   NowPlayingData: MoviesType[];
 }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   if (!PopularData.length && !TopRatedData.length && !NowPlayingData.length) {
     return <SplashScreen />;
   }
@@ -59,35 +59,7 @@ export default function Home({
       </Head>
 
       <section className="w-full h-[100dvh] bg-white flex items-center justify-center relative">
-        <header className="absolute top-4 left-10 right-10 h-12 z-10 flex items-center justify-between">
-          <div>
-            <img
-              className="w-36"
-              src="https://files.readme.io/29c6fee-blue_short.svg"
-            />
-          </div>
-          <nav>
-            <ul className="flex list-none">
-              <li className="mx-5">
-                <Link href={"/"}> Home </Link>
-              </li>
-              <li className="mx-5">
-                <Link href={"/"}> TV Series </Link>
-              </li>
-              <li className="mx-5">
-                <Link href={"/"}> Movies </Link>
-              </li>
-              <li className="mx-5">
-                <Link href={"/"}> About Me </Link>
-              </li>
-            </ul>
-          </nav>
-          <div>
-            <Button isIconOnly color="primary" onClick={onOpen}>
-              <SearchIcon />
-            </Button>
-          </div>
-        </header>
+        <Header />
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           className="h-full"
@@ -242,65 +214,7 @@ export default function Home({
         </div>
       </section>
 
-      <footer className="bg-gray-950 h-fit py-4 flex-col items-center justify-center">
-        <div className="w-[90%] mx-auto rounded bg-gray-800 py-2 px-4">
-          <div className="text-center">
-            Developed by NextJs <br />
-            Developer :{" "}
-            <Link
-              className="text-blue-500"
-              href={"mailto:yonesmaheri80@gmail.com"}
-            >
-              Yones Maheri
-            </Link>
-          </div>
-          <nav className="text-center flex items-center justify-center">
-            <Link href={"https://github.com/yonesmaheri"}>
-              <GithubIcon />
-            </Link>
-          </nav>
-        </div>
-      </footer>
-
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <Footer />
     </>
   );
 }
