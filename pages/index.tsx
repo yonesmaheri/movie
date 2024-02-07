@@ -29,6 +29,8 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import GithubIcon from "@/app/icons/GithubIcon";
+import { useQuery } from "react-query";
+import SplashScreen from "@/app/components/splashScreen";
 
 export default function Home({
   PopularData,
@@ -41,6 +43,14 @@ export default function Home({
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const { data, isFetching, isSuccess } = useQuery({
+    queryKey: ["PopularData"],
+    queryFn: () => apiCall.get("/movie/popular"),
+  });
+  if (isFetching) {
+    return <SplashScreen />;
+  }
+
   return (
     <>
       <Head>
@@ -52,6 +62,7 @@ export default function Home({
           type="image/png"
         ></link>
       </Head>
+
       <section className="w-full h-[100dvh] bg-white flex items-center justify-center relative">
         <header className="absolute top-4 left-10 right-10 h-12 z-10 flex items-center justify-between">
           <div>
