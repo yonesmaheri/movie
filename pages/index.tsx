@@ -29,7 +29,6 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import GithubIcon from "@/app/icons/GithubIcon";
-import { useQuery } from "react-query";
 import SplashScreen from "@/app/components/splashScreen";
 
 export default function Home({
