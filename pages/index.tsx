@@ -17,18 +17,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Head from "next/head";
-import SearchIcon from "@/app/icons/SearchIcon";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import GithubIcon from "@/app/icons/GithubIcon";
 import SplashScreen from "@/app/components/splashScreen";
 import Footer from "@/app/components/footer";
 import Header from "@/app/components/header";
@@ -175,7 +165,7 @@ export default function Home({
               </SwiperSlide>
             ))}
           </Swiper>
-          <Button as={Link} href="/" color="primary">
+          <Button as={Link} href="/movies" color="primary">
             Explore All
           </Button>
         </div>
@@ -208,7 +198,7 @@ export default function Home({
               </SwiperSlide>
             ))}
           </Swiper>
-          <Button as={Link} href="/" color="primary">
+          <Button as={Link} href="/movies" color="primary">
             Explore All
           </Button>
         </div>
