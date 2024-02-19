@@ -79,8 +79,8 @@ export default function SingleMovie({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              {SingleMovieData.genres.map((item) => (
-                <Chip color="primary" className="mr-2" variant="flat">
+              {SingleMovieData.genres.map((item,index) => (
+                <Chip key={index} color="primary" className="mr-2" variant="flat">
                   {item.name}
                 </Chip>
               ))}
@@ -92,8 +92,8 @@ export default function SingleMovie({
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <span className="mr-2">Production from :</span>
-              {SingleMovieData.production_countries.map((item) => (
-                <Chip color="warning" className="mr-2" variant="bordered">
+              {SingleMovieData.production_countries.map((item,index) => (
+                <Chip key={index} color="warning" className="mr-2" variant="bordered">
                   {item.name}
                 </Chip>
               ))}
