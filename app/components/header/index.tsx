@@ -33,7 +33,7 @@ export default function Header() {
             <Link href={"/"}> Movies </Link>
           </li>
           <li className="mx-5">
-            <Link href={"/"}> About Me </Link>
+            <Link href={"https://yonesma.ir"}> About Me </Link>
           </li>
         </ul>
       </nav>
